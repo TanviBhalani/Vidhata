@@ -84,13 +84,13 @@ export default function Footer() {
       {/* Floating Icons */}
       <div className="fixed right-4 max-sm:bottom-5 bottom-10 flex flex-col gap-2 z-50">
         <a
-          href="tel:+919876543210"
+          href="tel:+91 8141452353"
           className="bg-gray-700 hover:bg-gray-800 p-3 rounded-md"
         >
           <FaPhoneAlt className="text-white text-xl" />
         </a>
         <a
-          href="https://wa.me/919876543210"
+          href="https://wa.me/91 8141452353"
           target="_blank"
           className="bg-green-500 hover:bg-green-600 p-3 rounded-md"
         >

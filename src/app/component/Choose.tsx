@@ -5,7 +5,7 @@ export default function Choose() {
     <div>
       <div className="bg-[#e6e6e6] w-full pt-30 pb-15 px-5">
         {/* Heading */}
-        <div className="flex justify-between max-sm:flex-col max-sm:items-center max-sm:text-center">
+        <div className="flex justify-between max-sm:flex-col max-sm:items-center max-sm:text-center ">
           <h1 className="w-100 text-5xl tracking-widest leading-13 font-medium flex items-center px-5 max-sm:text-3xl max-sm:px-5">
             Why Choose VIDHATA
           </h1>

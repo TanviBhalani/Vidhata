@@ -55,14 +55,7 @@ export default function Carousel() {
 
   return (
     <div className="bg-black w-full">
-      {/* <div className="flex justify-between px-5 max-sm:flex-col max-sm:items-center max-sm:text-center max-sm:pt-10">
-        <h1 className="text-5xl tracking-widest text-white flex items-center px-5 max-sm:text-3xl max-sm:px-0 z-1">
-          Events & Participation
-        </h1>
-        <p className="text-xl text-white w-135 max-sm:w-[90%] max-sm:text-sm max-sm:mt-4 my-10 z-1">
-          STATE-OF-THE-ART FACILITIES BUILT FOR IMPACTFUL EVENTS AND ACTIVE PARTICIPATION. EXPERIENCE QUALITY, EFFICIENCY, AND SUSTAINABILITY IN EVERY DETAIL.
-        </p>
-      </div> */}
+      
         <div
       ref={containerRef}
       className="relative w-[80%]  overflow-hidden mx-auto shadow-lg bg-black py-15"
@@ -142,3 +135,13 @@ export default function Carousel() {
     </div>
   );
 }
+
+
+
+
+
+
+
+
+
+

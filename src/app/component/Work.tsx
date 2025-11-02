@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function Work() {
   return (
-    <div className='bg-black w-full mt-20 max-sm:mt-0 pb-15'>
+    <div className='bg-black w-full mt-20 max-sm:-mt-10 pb-15 '>
       <div className="flex justify-between px-5 max-sm:flex-col max-sm:items-center max-sm:text-center max-sm:pt-10">
         <h1 className="text-5xl tracking-widest text-white flex items-center px-5 max-sm:text-3xl max-sm:px-0 z-1">
           How We Work
