@@ -1,6 +1,8 @@
 "use client";
 import React from "react";
 import { FaPhoneAlt, FaWhatsapp } from "react-icons/fa";
+import Link from "next/link";
+
 
 export default function Footer() {
   return (
@@ -21,9 +23,13 @@ export default function Footer() {
             Our focus on precision, sustainability, and quality has made us a
             trusted name across industries worldwide.
           </p>
-          <button className="mt-6 bg-gray-600 hover:bg-gray-700 text-white px-6 py-3 rounded-full font-semibold shadow-lg">
+
+          <Link
+            href="/contacts"
+            className="mt-6 inline-block bg-gray-600 hover:bg-gray-700 text-white px-6 py-3 rounded-full font-semibold shadow-lg"
+          >
             READ MORE
-          </button>
+          </Link>
         </div>
 
         {/* Middle: Quick Links */}
@@ -31,41 +37,42 @@ export default function Footer() {
           <h3 className="text-xl font-semibold mb-4">Quick Links</h3>
           <ul className="space-y-2 text-gray-300">
             <li>
-              <a href="#" className="hover:text-gray-400">
+              <Link href="/" className="hover:text-gray-400">
                 Home
-              </a>
+              </Link>
             </li>
+
             <li>
-              <a href="#" className="hover:text-gray-400">
-                About Us
-              </a>
-            </li>
-            <li>
-              <a href="#" className="hover:text-gray-400">
+              <Link href="/products" className="hover:text-gray-400">
                 Products
-              </a>
+              </Link>
             </li>
+
             <li>
-              <a href="#" className="hover:text-gray-400">
-                Certifications / Awards
-              </a>
+              <Link href="/about" className="hover:text-gray-400">
+                About Us
+              </Link>
             </li>
+
             <li>
-              <a href="#" className="hover:text-gray-400">
-                Dealers Login
-              </a>
+              <Link href="/news" className="hover:text-gray-400">
+                News
+              </Link>
             </li>
+
             <li>
-              <a href="#" className="hover:text-gray-400">
-                Career @ VIDHATA
-              </a>
+              <Link href="/downloads" className="hover:text-gray-400">
+                Downloads
+              </Link>
             </li>
+
             <li>
-              <a href="#" className="hover:text-gray-400">
+              <Link href="/contacts" className="hover:text-gray-400">
                 Contact Us
-              </a>
+              </Link>
             </li>
           </ul>
+
         </div>
 
         {/* Right: Map */}
@@ -100,8 +107,7 @@ export default function Footer() {
 
       {/* Bottom Bar */}
       <div className="bg-black text-center py-3 text-sm">
-        © 2025 <span className="font-semibold">VIDHATA</span> All rights
-        reserved
+        © 2025 <span className="font-semibold">VIDHATA</span> All rights reserved
       </div>
 
       {/* Back to Top Button

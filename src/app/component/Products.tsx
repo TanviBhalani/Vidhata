@@ -141,6 +141,9 @@
 "use client";
 import React, { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
+import Link from "next/link";
+
+
 
 export default function Products() {
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -275,14 +278,22 @@ function StackCard({
         </div>
 
         <div className="flex mt-10 max-sm:mt-4">
-          <button className="bg-gray-700 text-white px-7 py-2 rounded-lg cursor-pointer 
-                             max-sm:px-4 max-sm:py-1 max-sm:text-sm">
-            View
-          </button>
-          <p className="underline m-2 ml-4 cursor-pointer text-gray-700 
+          <Link href="/downloads">
+            <button
+              className="bg-gray-700 text-white px-7 py-2 rounded-lg cursor-pointer
+               max-sm:px-4 max-sm:py-1 max-sm:text-sm"
+            >
+              View
+            </button>
+          </Link>
+
+          <Link href="/downloads">
+             <p className="underline m-2 ml-4 cursor-pointer text-gray-700 
                         max-sm:m-1 max-sm:ml-2 max-sm:text-xs">
             Learn More
           </p>
+          </Link>
+          
         </div>
       </div>
     </motion.div>

@@ -1,158 +1,31 @@
-// "use client";
-// import { useState, useEffect } from "react";
-
-// export default function Navbar() {
-//   const [showProducts, setShowProducts] = useState(false);
-//   const [isHoveringMenu, setIsHoveringMenu] = useState(false);
-//   const [fadeIn, setFadeIn] = useState(false);
-
-//   // Wait 17 seconds before showing navbar content
-//   useEffect(() => {
-//     const timer = setTimeout(() => setFadeIn(true), 2000);
-//     return () => clearTimeout(timer);
-//   }, []);
-
-//   // combined hover logic
-//   const isOpen = showProducts || isHoveringMenu;
-
-//   return (
-//     <div className="w-full z-10 fixed ">
-//       {/* Navbar */}
-//       <div
-//         className={`w-full h-12 flex justify-between px-10 items-center transition-all duration-700  ${
-//           isOpen ? "bg-white text-black" : "bg-black text-white"
-//         }`}
-//       >
-//         {/* Left */}
-//         <div
-//           className={`left transition-opacity duration-1000 ${
-//             fadeIn ? "opacity-100" : "opacity-0"
-//           }`}
-//         >
-//           <h1
-//             className={`font-bold tracking-widest text-xl p-2 transition-all duration-700 ${
-//               isOpen ? "text-black" : "text-white"
-//             }`}
-//             style={{fontFamily: "Bruno Ace sans-serif" , fontWeight: 400}}
-//           >
-//             VIDHATA
-//           </h1>
-//         </div>
-
-//         {/* Right */}
-//         <div
-//           className={`right p-3 w-130 transition-opacity duration-1000 ${
-//             fadeIn ? "opacity-100" : "opacity-0"
-//           }`}
-//         >
-//           <ul className="flex justify-between gap-8">
-//             <li
-//               className={`text-[1.1rem] cursor-pointer transition-all duration-700 ${
-//                 isOpen ? "text-black" : "text-white"
-//               }`}
-//               onMouseEnter={() => setShowProducts(true)}
-//               onMouseLeave={() => {
-//                 setTimeout(() => setShowProducts(false), 100);
-//               }}
-//             >
-//               Products
-//             </li>
-//             <li
-//               className={`text-[1.1rem] cursor-pointer transition-all duration-700 ${
-//                 isOpen ? "text-black" : "text-white"
-//               }`}
-//             >
-//               About Us
-//             </li>
-//             <li
-//               className={`text-[1.1rem] cursor-pointer transition-all duration-700 ${
-//                 isOpen ? "text-black" : "text-white"
-//               }`}
-//             >
-//               News
-//             </li>
-//             <li
-//               className={`text-[1.1rem] cursor-pointer transition-all duration-700 ${
-//                 isOpen ? "text-black" : "text-white"
-//               }`}
-//             >
-//               Downloads
-//             </li>
-//             <li
-//               className={`text-[1.1rem] cursor-pointer transition-all duration-700 ${
-//                 isOpen ? "text-black" : "text-white"
-//               }`}
-//             >
-//               Contacts
-//             </li>
-//           </ul>
-//         </div>
-//       </div>
-
-//       {/* Full-width Dropdown */}
-//       <div
-//         onMouseEnter={() => setIsHoveringMenu(true)}
-//         onMouseLeave={() => {
-//           setIsHoveringMenu(false);
-//           setShowProducts(false);
-//         }}
-//         className={`absolute left-0 w-full bg-white text-black shadow-md overflow-hidden transition-all duration-700 ease-in-out ${
-//           isOpen
-//             ? "opacity-100 translate-y-0"
-//             : "opacity-0 -translate-y-10 pointer-events-none"
-//         }`}
-//       >
-//         <div className="flex justify-between px-10 gap-20 py-0">
-//           <div className="flex flex-col items-start text-left mt-30">
-//             <p className="text-sm font-semibold mb-3 text-gray-500">
-//               PRODUCT CATEGORIES
-//             </p>
-//             <ul className="space-y-2 text-lg">
-//               <li className="hover:text-gray-500 transition cursor-pointer">
-//                 Pressure Switches
-//               </li>
-//               <li className="hover:text-gray-500 transition cursor-pointer">
-//                 Temperature Switches
-//               </li>
-//               <li className="hover:text-gray-500 transition cursor-pointer">
-//                 Level Switches
-//               </li>
-//             </ul>
-//           </div>
-
-//           {/* Product Thumbnails */}
-//           <div className="flex gap-10">
-//             <img
-//               src="/images/nav1.png"
-//               alt="Product 1"
-//               className="w-205 h-80 bg-cover hover:scale-105 transition-transform duration-300"
-//             />
-//           </div>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// }
-
-
-
-
-
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
+import Link from "next/link";
 
 export default function Navbar() {
   const [showProducts, setShowProducts] = useState(false);
   const [fadeIn, setFadeIn] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement | null>(null);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  // Fade in animation (logo + menu appear together)
+  // Fade-in animation
   useEffect(() => {
     const timer = setTimeout(() => setFadeIn(true), 1500);
     return () => clearTimeout(timer);
   }, []);
+
+  // Handle delayed close to prevent flicker
+  const handleMouseEnter = () => {
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    setShowProducts(true);
+  };
+
+  const handleMouseLeave = () => {
+    timeoutRef.current = setTimeout(() => setShowProducts(false), 200);
+  };
 
   const navLinks = ["About Us", "News", "Downloads", "Contacts"];
 
@@ -165,39 +38,81 @@ export default function Navbar() {
           max-sm:px-5`}
       >
         {/* Left: Logo */}
-        <motion.h1
+        {/* <motion.h1
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: fadeIn ? 1 : 0, y: fadeIn ? 0 : -20 }}
           transition={{ duration: 0.8 }}
-          className={`font-bold tracking-widest text-xl`}
+          className="font-bold tracking-widest text-xl"
           style={{ fontFamily: "Bruno Ace sans-serif", fontWeight: 400 }}
         >
           VIDHATA
-        </motion.h1>
+        </motion.h1> */}
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: fadeIn ? 1 : 0, y: fadeIn ? 0 : -20 }}
+          transition={{ duration: 0.8 }}
+        >
+          <Link href="/" passHref>
+            <motion.h1
+              whileHover={{ scale: 1.1, color: "#e85154" }}
+              whileTap={{ scale: 0.95 }}
+              className="cursor-pointer font-bold tracking-widest text-xl transition-all"
+              style={{
+                fontFamily: "serif",
+                fontWeight: 400,
+              }}
+            >
+              VIDHATA
+            </motion.h1>
+          </Link>
+        </motion.div>
 
         {/* Right: Desktop Menu */}
         <motion.ul
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: fadeIn ? 1 : 0, y: fadeIn ? 0 : -20 }}
           transition={{ duration: 0.8 }}
-          className="hidden max-sm:hidden md:flex gap-10 list-none"
+          className="hidden max-sm:hidden md:flex gap-10 list-none items-center"
         >
+          {/* Products dropdown trigger */}
           <li
-            onMouseEnter={() => setShowProducts(true)}
-            onMouseLeave={() => setShowProducts(false)}
-            className="cursor-pointer relative group"
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+            onClick={(e) => {
+              e.stopPropagation();
+              setShowProducts((prev) => !prev);
+            }}
+            className="cursor-pointer relative group select-none"
           >
             Products
             <span className="block w-0 h-0.5 bg-current transition-all duration-300 group-hover:w-full"></span>
           </li>
-          {navLinks.map((link) => (
+
+          {/* {navLinks.map((link) => (
             <li
               key={link}
               className="cursor-pointer hover:text-gray-400 transition"
             >
               {link}
             </li>
+          ))} */}
+
+          {[
+            { name: "About Us", href: "/about" },
+            { name: "News", href: "/news" },
+            { name: "Downloads", href: "/downloads" },
+            { name: "Contacts", href: "/contacts" },
+          ].map((link) => (
+            <li key={link.name}>
+              <Link
+                href={link.href}
+                className="hover:text-gray-400 transition"
+              >
+                {link.name}
+              </Link>
+            </li>
           ))}
+
         </motion.ul>
 
         {/* Mobile Menu Button */}
@@ -222,30 +137,50 @@ export default function Navbar() {
 
       {/* Desktop Dropdown */}
       <div
-        onMouseEnter={() => setShowProducts(true)}
-        onMouseLeave={() => setShowProducts(false)}
-        className={`absolute left-0 w-full bg-white text-black shadow-md overflow-hidden transition-all duration-700 ease-in-out ${
-          showProducts
-            ? "opacity-100 translate-y-0"
-            : "opacity-0 -translate-y-10 pointer-events-none"
-        } hidden md:block`}
+        ref={dropdownRef}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        className={`absolute h-70  left-0 w-full bg-white text-black shadow-md overflow-hidden transition-all duration-700 ease-in-out ${showProducts
+          ? "opacity-100 translate-y-0 pointer-events-auto"
+          : "opacity-0 -translate-y-10 pointer-events-none"
+          } hidden md:block`}
       >
-        <div className="flex justify-between px-16 max-sm:py-10  gap-20">
+        <div className="flex justify-between px-16 py-20 gap-20">
           {/* Left Column */}
-          <div className="flex flex-col items-start py-20 text-left">
+          <div className="flex flex-col items-start text-left">
             <p className="text-sm font-semibold mb-3 text-gray-500">
               PRODUCT CATEGORIES
             </p>
             <ul className="space-y-2 text-lg list-none">
-              <li className="hover:text-gray-500 transition cursor-pointer">
-                Pressure Switches
-              </li>
-              <li className="hover:text-gray-500 transition cursor-pointer">
-                Temperature Switches
-              </li>
-              <li className="hover:text-gray-500 transition cursor-pointer">
-                Level Switches
-              </li>
+              {/* {["Pressure Switches", "Temperature Switches", "Level Switches"].map(
+                (item) => (
+                  <li
+                    key={item}
+                    className="hover:text-gray-500 transition cursor-pointer"
+                    onClick={(e) => {
+                      e.stopPropagation(); // keep dropdown open
+                      console.log(`${item} clicked`);
+                    }}
+                  >
+                    {item}
+                  </li>
+                )
+              )} */}
+              {[
+                { name: "Pressure Switches", href: "/products/pressure-switches" },
+                { name: "Temperature Switches", href: "/products/temperature-switches" },
+                { name: "Level Switches", href: "/products/level-switches" },
+              ].map((item) => (
+                <li key={item.name} onClick={(e) => e.stopPropagation()}>
+                  <Link
+                    href={item.href}
+                    className="hover:text-gray-500 transition cursor-pointer"
+                  >
+                    {item.name}
+                  </Link>
+                </li>
+              ))}
+
             </ul>
           </div>
 
@@ -254,7 +189,8 @@ export default function Navbar() {
             <img
               src="/images/nav1.png"
               alt="Product 1"
-              className="max-sm:w-72 w-205 h-70   hover:scale-105 transition-transform duration-300"
+              className="w-full h-90 -mt-40 hover:scale-105 transition-transform duration-300 cursor-pointer rounded-xl"
+              onClick={(e) => e.stopPropagation()}
             />
           </div>
         </div>
@@ -279,6 +215,7 @@ export default function Navbar() {
                 <span className="text-lg font-medium">Products</span>
                 <span className="text-xl">{showProducts ? "−" : "+"}</span>
               </div>
+
               <AnimatePresence>
                 {showProducts && (
                   <motion.div
@@ -289,20 +226,24 @@ export default function Navbar() {
                     className="mt-3 pl-3 border-l border-gray-600"
                   >
                     <ul className="space-y-2 text-sm text-gray-300 list-none">
-                      <li className="hover:text-gray-100 cursor-pointer">
-                        Pressure Switches
-                      </li>
-                      <li className="hover:text-gray-100 cursor-pointer">
-                        Temperature Switches
-                      </li>
-                      <li className="hover:text-gray-100 cursor-pointer">
-                        Level Switches
-                      </li>
+                      {[
+                        { name: "Pressure Switches", href: "/products/pressure-switches" },
+                        { name: "Temperature Switches", href: "/products/temperature-switches" },
+                        { name: "Level Switches", href: "/products/level-switches" },
+                      ].map((item) => (
+                        <li key={item.name} onClick={(e) => e.stopPropagation()}>
+                          <Link href={item.href} className="hover:text-gray-100">
+                            {item.name}
+                          </Link>
+                        </li>
+                      ))}
+
                     </ul>
                     <img
                       src="/images/nav1.png"
                       alt="Product"
                       className="mt-4 w-full h-40 object-cover rounded-xl"
+                      onClick={(e) => e.stopPropagation()}
                     />
                   </motion.div>
                 )}
@@ -310,14 +251,29 @@ export default function Navbar() {
             </div>
 
             {/* Other Links */}
-            {navLinks.map((link) => (
+            {/* {navLinks.map((link) => (
               <div
                 key={link}
                 className="text-lg hover:text-gray-400 cursor-pointer"
               >
                 {link}
               </div>
+            ))} */}
+            {[
+              { name: "About Us", href: "/about" },
+              { name: "News", href: "/news" },
+              { name: "Downloads", href: "/downloads" },
+              { name: "Contacts", href: "/contacts" },
+            ].map((link) => (
+              <Link
+                key={link.name}
+                href={link.href}
+                className="text-lg hover:text-gray-400 cursor-pointer"
+              >
+                {link.name}
+              </Link>
             ))}
+
           </motion.div>
         )}
       </AnimatePresence>

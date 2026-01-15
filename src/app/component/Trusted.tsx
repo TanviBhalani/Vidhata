@@ -1,23 +1,3 @@
-// import React from 'react'
-
-// export default function Trusted() {
-//   return (
-//     <div className='bg-black w-full'>
-//       <h1 className='text-lg text-gray-400 text-center pt-50 pb-15   '>Trusted by</h1>
-//       <div className="slider flex justify-between">
-//         <img src="/images/logo1.png" className='w-50 h-15' alt="" />
-//         <img src="/images/logo5.png" className='w-50 h-15' alt="" />
-//         <img src="/images/logo7.webp" className='w-50 h-15' alt="" />
-//         <img src="/images/logo1.png" className='w-50 h-15' alt="" />
-//         <img src="/images/logo5.png" className='w-50 h-15' alt="" />
-//         <img src="/images/logo7.webp" className='w-50 h-15' alt="" />
-        
-//       </div>
-//     </div>
-//   )
-// }
-
-
 import React from "react";
 
 export default function Trusted() {
@@ -44,4 +24,6 @@ export default function Trusted() {
     </div>
   );
 }
+
+
 
